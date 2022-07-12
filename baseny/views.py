@@ -1,5 +1,6 @@
 import locale
 from django.shortcuts import render
+from . import models
 
 locale.setlocale(locale.LC_COLLATE, ("PL_pl", "UTF-8"))
 
@@ -45,3 +46,10 @@ def baseny(request):
 
 
     return render(request, 'baseny/baseny.html', context=my_var)
+
+def baseny2(request):
+
+    all_pools = models.Basen.objects.all()
+    my_var = {'pools': all_pools}
+
+    return render(request, 'baseny/b2.html', context=my_var)
