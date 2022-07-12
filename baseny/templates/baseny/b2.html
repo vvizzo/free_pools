@@ -1,0 +1,175 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mikołaj Machowski, Freediving community, Bootstrap contributors">
+    <meta property="og:title" content="Lista basenów przyjaznych freediverom">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="http://www.mikmach.pl/free/baseny/lista">
+    <meta property="og:image" content="">
+    <title>Lista przyjaznych basenów (sql)</title>
+
+
+    <link href="{% static 'baseny/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+
+      .b-example-divider {
+        height: 3rem;
+        background-color: rgba(0, 0, 0, .1);
+        border: solid rgba(0, 0, 0, .15);
+        border-width: 1px 0;
+        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+      }
+
+      .b-example-vr {
+        flex-shrink: 0;
+        width: 1.5rem;
+        height: 100vh;
+      }
+
+      .bi {
+        vertical-align: -.125em;
+        fill: currentColor;
+      }
+
+      .nav-scroller {
+        position: relative;
+        z-index: 2;
+        height: 2.75rem;
+        overflow-y: hidden;
+      }
+
+      .nav-scroller .nav {
+        display: flex;
+        flex-wrap: nowrap;
+        padding-bottom: 1rem;
+        margin-top: -1px;
+        overflow-x: auto;
+        text-align: center;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      section#head_section {
+	      background-image: url("{% static 'baseny/imgs/pool_cover_c.jpg' %}");
+	      background-color: #ccc;
+	      background-position: center;
+	      background-repeat: no-repeat;
+	      background-size: cover;
+	      text-shadow: 1px 1px 2px #111 !important;
+      }
+
+      td {
+	      text-align: left;
+      }
+
+    </style>
+
+    
+  </head>
+  <body>
+    
+<header>
+  <div class="collapse bg-dark" id="navbarHeader">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 col-md-7 py-4">
+          <h4 class="text-white">O stronie</h4>
+          <p class="text-white">Informacja o basenach przyjaznych freediverom, lista zainicjowana przez Natalę Wilk na grupie FB Freediving Polska.</p>
+        </div>
+        <div class="col-sm-4 offset-md-1 py-4">
+          <h4 class="text-white">Kontakt</h4>
+          <ul class="list-unstyled">
+            <li><a href="https://www.facebook.com/groups/freedivingpolska" class="text-white">FB Freediving Polska</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="navbar navbar-dark bg-dark shadow-sm">
+    <div class="container">
+      <a href="#" class="navbar-brand d-flex align-items-center">
+<svg width="28" height="28" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M36 27V8C36 5.79 37.79 4 40 4H44" stroke="#fff" stroke-width="3" stroke-miterlimit="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 27V8C10 5.79 11.79 4 14 4H18" stroke="#fff" stroke-width="3" stroke-miterlimit="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 12H36" stroke="#fff" stroke-width="3" stroke-miterlimit="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 20H36" stroke="#fff" stroke-width="3" stroke-miterlimit="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 34L6.5 35.3514C8.1 36.2162 9.9 36.2162 11.5 35.3514C13.1 34.4865 14.9 34.4865 16.5 35.3514C18.1 36.2162 19.9 36.2162 21.5 35.3514C23.1 34.4865 24.9 34.4865 26.5 35.3514C28.1 36.2162 29.9 36.2162 31.5 35.3514C33.1 34.4865 34.9 34.4865 36.5 35.3514C38.1 36.2162 39.9 36.2162 41.5 35.3514L44 34" stroke="#fff" stroke-width="3" stroke-miterlimit="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 40L6.5 41.3514C8.1 42.2162 9.9 42.2162 11.5 41.3514C13.1 40.4865 14.9 40.4865 16.5 41.3514C18.1 42.2162 19.9 42.2162 21.5 41.3514C23.1 40.4865 24.9 40.4865 26.5 41.3514C28.1 42.2162 29.9 42.2162 31.5 41.3514C33.1 40.4865 34.9 40.4865 36.5 41.3514C38.1 42.2162 39.9 42.2162 41.5 41.3514L44 40" stroke="#fff" stroke-width="3" stroke-miterlimit="2" stroke-linecap="round" stroke-linejoin="round"/></svg> 
+        <strong>Baseny</strong>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <section class="py-5 text-center container" id="head_section">
+    <div class="row py-lg-5">
+      <div class="col-lg-6 col-md-8 mx-auto">
+        <h1 class="text-white">Lista basenów</h1>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-5 text-center container">
+  <p class="text-dark">Informacja o basenach przyjaznych freediverom, lista zainicjowana przez Natalę Wilk na grupie FB Freediving Polska. Stan na 2022-06-05.</p>
+  <div class="table-responsive containter py-5" id="baseny_lista">
+	  <table class="table table-hover">
+		  <thead>
+			  <tr>
+				  <th scope="col">Miasto</th>
+				  <th scope="col">Nazwa pływalni</th>
+				  <th scope="col">Szczegóły</th>
+				  <th scope="col">Adres</th>
+				  <th scope="col">Województwo</th>
+				  <th scope="col">Uwagi</th>
+			  </tr>
+		  </thead>
+		  <tbody>
+			  {% for pool in pools %}
+			  <tr>
+				  <td scope="col">{{pool.city}}</td>
+				  <td scope="col">{% if pool.www %}<a href="{{pool.www}}">{% endif %}{{pool.name}}{% if pool.www %}</a>{% endif %}</td>
+				  <td scope="col">{{pool.details}}</td>
+				  <td scope="col"><a href="https://www.openstreetmap.org/?mlat={{pool.lat}}&mlon={{pool.lon}}#map=17/{{pool.lat}}/{{pool.lon}}">{{pool.address}}</a></td>
+				  <td scope="col">{{pool.voivodeship}}</td>
+				  <td scope="col">{{pool.remarks}}</td>
+			  </tr>
+			  {% endfor %}
+		  </tbody>
+
+	  </table>
+  </div>
+  </section>
+
+</main>
+
+<footer class="text-muted py-5">
+  <div class="container">
+    <p class="float-end mb-1">
+      <a href="#baseny_lista">Na górę</a>
+    </p>
+  </div>
+</footer>
+
+
+    <script src="{% static 'baseny/js/bootstrap.bundle.min.js' %}"></script>
+
+      
+  </body>
+</html>
