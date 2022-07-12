@@ -21,4 +21,5 @@ app_name = 'baseny'
 
 urlpatterns = [
     path('', views.baseny, name="baseny"),
+    path('b2', views.baseny2, name="b2"),
 ]
